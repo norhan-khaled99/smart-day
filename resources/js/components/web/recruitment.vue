@@ -1,5 +1,6 @@
 <template>
   <!-- ======= Breadcrumbs ======= -->
+  <div>
   <div
     class="breadcrumbs d-flex align-items-center"
     style="background-image: url('/web/assets/img/breadcrumbs-bg.jpg')"
@@ -18,8 +19,13 @@
       </ol>
     </div>
   </div>
+
   <!-- End Breadcrumbs -->
 
+     <!-- FAQ Section -->
+     <Section >
+
+     </Section>
   <!-- ======= Contact Section ======= -->
   <section id="contact" class="contact">
     <div class="container" data-aos="fade-up" data-aos-delay="100">
@@ -231,6 +237,7 @@
     </div>
   </section>
   <!-- End Contact Section -->
+</div>
 </template>
 
 <script>
@@ -304,6 +311,8 @@ export default {
         })
         .catch((error) => {});
     }
+
+
     return {
       store,
       ...toRefs(form),

@@ -4,7 +4,7 @@
         <div class="col-md-6">
             <div class="card mt-5">
                 <div class="card-body">
-             <form action="route('feedback.store')" @submit.prevent="submitForm()" method="get" class="feedback-form">
+             <form action="route('feedback.store')" @submit.prevent="submitForm()" method="post " class="feedback-form">
 
             <div class="form-group my-3">
                 <label for="point1" class="form-label">١ - الالتزام بالموعد</label>
@@ -60,6 +60,7 @@
       try {
         console.log(form.value);
         const response = await feedbackClient.store(form.value);
+        form.value="";
         console.log('Feedback submitted successfully:', response);
       } catch (error) {
         console.error('Error submitting feedback:', error);
@@ -69,7 +70,6 @@
     return{
         form,
         submitForm
-
     }
 
   },
@@ -77,8 +77,6 @@
  </script>
 
  <style scoped>
- *{
-    direction: rtl;
- }
+
 
  </style>

@@ -557,7 +557,7 @@
           <li>
             <router-link
               :class="{ activeLink: currentPage == 'Feedbacks' }"
-              @click="currentPage = 'all-Cities'"
+              @click="currentPage = 'Feedbacks'"
               class="dropdown-toggle no-arrow"
               to="/admin/Feedbacks"
               ><span class="micon dw dw-invoice"></span
@@ -565,6 +565,16 @@
             >
           </li>
 
+          <li>
+            <router-link
+              :class="{ activeLink: currentPage == 'questions' }"
+              @click="currentPage = 'questions'"
+              class="dropdown-toggle no-arrow"
+              to="/admin/questions"
+              ><span class="micon dw dw-invoice"></span
+              ><span class="mtext">{{ $t("questions") }}</span></router-link
+            >
+          </li>
         </ul>
       </div>
     </div>

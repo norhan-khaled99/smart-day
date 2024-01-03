@@ -14,7 +14,7 @@ import Install from '../components/web/install';
 import Products from '../components/web/products';
 import Assemblekit from '../components/web/assemble-kit/steps';
 import AssemblekitResult from '../components/web/assemble-kit/result';
-
+import Question from "../components/web/question.vue"
 import createfeedback from "../components/web/Createfeedback.vue";
 import Chat from '../components/web/chat';
 import AuthenticatedGuard from "../shared/guards/authenticated-guard";
@@ -49,6 +49,8 @@ export default [
             { path: "products/:id", component: Products, name: "products", },
             { path: "assemble-kit", component: Assemblekit, name: "assemble-kit", },
             { path: "assemble-kit-result", component: AssemblekitResult, name: "assemble-kit-result", },
+            { path:"/question",component:Question, name: "question" },
+
         ]
     },
     {
@@ -66,6 +68,9 @@ export default [
     {
         path:"/createfeedback",
         component:createfeedback,
+
+    },
+    {
 
     }
 ];

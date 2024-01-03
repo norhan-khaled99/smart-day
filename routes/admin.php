@@ -94,4 +94,8 @@ Route::prefix("media-manager")->group(function () {
     Route::get("", "MediaManagerController@getAllMedia");
     Route::delete("{id}", "MediaManagerController@deleteMedia");
 });
-
+Route::prefix("questions")->group(function(){
+Route::post("store", "QuestionController@store");
+Route::get("", "QuestionController@getAllQuestions");
+Route::delete("{id}", "QuestionController@deleteQuestion");
+});

@@ -16,9 +16,7 @@ export default {
     getAllProducts() {
         return axios.get(`${BASE_URL}/`);
     },
-    // getPrice(productId) {
-    //     return axios.get(`${BASE_URL}/${productId}`);
-    // },
+
     getProductDetails(productId){
         return axios.get(`${BASE_URL}/${productId}`);
     }

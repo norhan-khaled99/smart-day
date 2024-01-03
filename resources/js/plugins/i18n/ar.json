@@ -387,5 +387,14 @@
     "All Cities": "كل المدن",
     "Feedbacks":"التقييمات",
     "No feedback available":"لا يوجد تقييمات لعرضها ",
-    "All Feedbacks":"كل التقييمات"
+    "All Feedbacks":"كل التقييمات",
+    "questions":"الاسئلة الشائعة",
+    "Question":"السؤال",
+    "Answer":"الاجابة",
+    "submit":"اضغط للارسال",
+    "Add Product":"اضف سؤال",
+    "Question Arabic":"السؤال باللغة العربية",
+    "Question English":"السؤال باللغة الانجليزية",
+    "Answer Arabic":"الاجابة باللغة العربية",
+    "Answer English":"الاجابة باللغةالانجيليزية"
 }

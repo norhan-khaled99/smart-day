@@ -163,6 +163,10 @@
                   </div>
                 </div>
 
+                <div v-if="cityStatus==false" class="alert alert-danger" role="alert">
+                    A simple danger alert—check it out!
+                </div>
+
                 <div class="col-lg-6 form-group">
                   <Multiselect
                   :placeholder="$t('SELECT_CITY')"
@@ -176,10 +180,12 @@
                   :options="filteredCities"
                   @select="getcityStatus()"
                 />
-                {{cityStatus }}
-                <!-- <div v-if="cityStatus==false" class="alert alert-danger" role="alert">
-                    A simple danger alert—check it out!
-                </div> -->
+
+
+                {{ cityStatus }}
+                <div v-if="isCityStatusFalse">
+                    nn
+                </div>
 
                 <div class="invalid-feedback">
                     <div v-for="error in v$.city_id.$errors" :key="error">
@@ -203,8 +209,28 @@
                   />
                 </div>
 
-                {{ getproductdetails.price }}
+                <div class="col-lg-6 form-group">
+                    <input
+                      type="number"
+                      class="form-control"
+                      name="email"
+                      v-model="v$.quantity.$model"
+                      :class="{
+                        'is-invalid': v$.quantity.$error,
+                      }"
+                      :placeholder="$t('quantity')"
+                    />
+                    <div class="invalid-feedback">
+                      <div v-for="error in v$.quantity.$errors" :key="error">
+                        {{ $t("quantity") + " " + $t(error.$validator) }}
+                      </div>
+                    </div>
+                  </div>
 
+
+                <div class="row d-flex justify-content-between">
+                    {{ getTotalPrice()}} {{ getTaxes() }}
+                </div>
 
                 <div class="col-lg-6 form-group">
                   <input
@@ -242,31 +268,6 @@
                   </div>
                 </div>
 
-
-
-                <div class="col-lg-6 form-group">
-                  <input
-                    type="number"
-                    class="form-control"
-                    name="email"
-                    v-model="v$.quantity.$model"
-                    :class="{
-                      'is-invalid': v$.quantity.$error,
-                    }"
-                    :placeholder="$t('quantity')"
-                  />
-                  <div class="invalid-feedback">
-                    <div v-for="error in v$.quantity.$errors" :key="error">
-                      {{ $t("quantity") + " " + $t(error.$validator) }}
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  {{ getTotalPrice()}}
-                   <!-- {{ getproductdetails.taxes }} -->
-
-                </div>
 
                 <div class="col-lg-12 form-group">
                   <input
@@ -318,7 +319,7 @@ import productApiClient from "../../http-clients/web/product-client";
 import { required, email } from "@vuelidate/validators";
 import installClient from "../../http-clients/web/install-client";
 import { toast } from "vue3-toastify";
-import { onMounted, reactive, toRefs , ref} from "vue";
+import { onMounted, reactive, toRefs , ref, watch,computed} from "vue";
 import { useI18n } from "vue-i18n";
 import useVuelidate from "@vuelidate/core";
 
@@ -335,8 +336,7 @@ export default {
     let productId=ref(null);
 
     const cityId = ref(null);
-    const cityStatus = ref('');
-
+    const cityStatus = ref(null);
 
     const form = reactive({
       name: "",
@@ -354,10 +354,7 @@ export default {
       message: "",
     });
 
-    // const data = reactive({
-    //   areas: [],
-    //   cities: [],
-    // });
+
     const data = reactive({
     areas: [
         { id: 1, name: "الوسطى", name_e: "Central" },
@@ -402,11 +399,11 @@ export default {
     });
 
 
+
     const fetchAllProducts = async () => {
         try {
             const response = await productApiClient.getAllProducts();
             products.value = response.data.data;
-            // console.log(products.value);
 
         } catch (error) {
             console.error('Error fetching all products:', error);
@@ -414,42 +411,20 @@ export default {
     };
 
     const getTotalPrice = () => {
-      // Check if product details and quantity exist
+
       if (getproductdetails.value && form.quantity) {
         const quantity = parseFloat(form.quantity);
         const price = parseFloat(getproductdetails.value.price);
-        const Taxes= getproductdetails.value.taxes;
-        // Calculate the total price
         const totalPrice = quantity * price;
-        console.log(Taxes,totalPrice);
+        console.log(totalPrice);
         return (totalPrice.toFixed(2));
       }
       return '';
     };
-    const getTaxes=()=>{
-
-      
+    const getTaxes = () => {
+        const Taxes= getproductdetails.value.taxes;
+        return Taxes;
     }
-
-//     const getTotalPrice = () => {
-//   // Check if product details and quantity exist
-//   if (getproductdetails.value && form.quantity) {
-//     const quantity = parseFloat(form.quantity);
-//     const price = parseFloat(getproductdetails.value.price);
-//     const taxes = getproductdetails.value.taxes;
-
-//     const totalPrice = quantity * price;
-
-//     return {
-//       totalPrice: totalPrice.toFixed(2),
-//       taxes: taxes,
-//     };
-//   }
-
-//   return { totalPrice: '', taxes: '' };
-// };
-
-
 
     const getproductdetailsbyId = async () => {
         productId=form.product_id;
@@ -468,6 +443,7 @@ export default {
     onMounted(() => {
     fetchAllProducts();
     getCities();
+    getcityStatus();
     });
 
     const rules = {
@@ -486,13 +462,21 @@ export default {
     };
 
     const getcityStatus = () => {
+
       data.filteredCities.forEach((filteredCity) => {
         if (filteredCity.id == form.city_id) {
           cityStatus.value = filteredCity.status;
           console.log(cityStatus.value);
         }
+
       });
     };
+
+    watch(cityStatus, (newCityStatus, oldCityStatus) => {
+      console.log("City Status changed:", newCityStatus);
+    });
+    const isCityStatusFalse = computed(() => cityStatus.value === false);
+
 
 
 
@@ -518,12 +502,6 @@ export default {
 
     const v$ = useVuelidate(rules, form);
 
-    // function getAreas() {
-    //   installClient.getAreas().then((res) => {
-    //     data.areas = res.data;
-
-    //   });
-    // }
 
     function datetimeLocal() {
       const dt = new Date();
@@ -588,15 +566,16 @@ export default {
       productId,
       filteredCities,
       getproductdetails,
-    //   fetchAllProducts,
       getTotalPrice,
       getproductdetailsbyId,
       products,
       cityStatus,
       cityId,
       filteredCity,
-    //   getproductID,
+      filteredCities,
       getcityStatus,
+      isCityStatusFalse,
+      getTaxes,
       ...toRefs(form),
       ...toRefs(data),
       v$,

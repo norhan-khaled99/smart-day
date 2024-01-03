@@ -10,7 +10,11 @@ import Toaster from "@meforma/vue-toaster";
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 import CKEditor from '@ckeditor/ckeditor5-vue';
+import Vue from 'vue'
 
+// Import Bootstrap and BootstrapVue CSS files (order is important)
+
+// Make BootstrapVue available throughout your project
 const app = createApp(App);
 app.use(VueSweetalert2);
 app.use(CKEditor);

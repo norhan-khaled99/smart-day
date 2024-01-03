@@ -29,7 +29,6 @@ class ProductController extends Controller
     {
         $validatedData = $request->validated();
 
-        // Store the product and return the created instance
         $product = $this->productRepository->store($validatedData);
         return response()->json("Item created successfully with id : $product->id",$product);
     }
@@ -65,16 +64,16 @@ class ProductController extends Controller
     {
         return $this->productRepository->getProduct($id);
     }
-    public function GetAllProducts()
+    public function Products()
     {
         $products = Product::all();
         return response()->json($products);
     }
-    public function getPrice($productId)
-    {
-        $product = Product::findOrFail($productId);
-        return response()->json(['price' => $product->price]);
-    }
+    // public function getPrice($productId)
+    // {
+    //     $product = Product::findOrFail($productId);
+    //     return response()->json(['price' => $product->price]);
+    // }
 
 
 

@@ -44,7 +44,7 @@
                  <router-link
                 to="/notification-service"
                 >{{ $t("MONITIRING") }}</router-link
-              ></li> 
+              ></li>
               </ul>
             </li>
             <li>
@@ -74,7 +74,7 @@
                     {{ $t("AJAX_PRODUCTS") }}
                   </router-link>
                 </li>
-                
+
               </ul>
             </li>
             <li>
@@ -85,6 +85,13 @@
                 >{{ $t("ASSEMBLE_KIT") }}</router-link
               >
             </li>
+            <li>
+                <router-link
+                  :class="{ active: currentPage == 'question' }"
+                  to="/question"
+                  >{{ $t("questions") }}</router-link
+                >
+              </li>
           </ul>
         </nav>
         <!-- .navbar -->
@@ -111,13 +118,13 @@
                   {{ $t("EMAIL") }} : Info@sd.com.sa                  </div>
                 </p>
                 <div class="social-links d-flex mt-3">
-                  
+
                   <a
                     href="#"
                     class="d-flex align-items-center justify-content-center"
                     ><i class="bi bi-instagram"></i
                   ></a>
-                  
+
                   <a
                     href="#"
                     class="d-flex align-items-center justify-content-center"
@@ -179,7 +186,7 @@
                     $t("APPLY_JOB")
                   }}</router-link>
                 </li>
-                
+
                 <li>
                   <router-link to="/install">{{
                     $t("INSTALLATION")
@@ -247,7 +254,7 @@
              جميع الحقوق محفوظة &copy; {{(new Date()).getFullYear()}} <strong><span>SmartDay</span></strong
             >
           </div>
-          
+
         </div>
       </div>
     </footer>

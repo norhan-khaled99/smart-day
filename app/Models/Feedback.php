@@ -15,11 +15,15 @@ class Feedback extends Model
         'point3',
         'point4',
         'comments',
-        // Add other fields here as needed
+        'code'
     ];
-    public function install()
+    public function feedback()
     {
-        return $this->hasOne(Install::class, 'serial', 'code');
+        return $this->belongsTo(Feedback::class);
     }
 
+    public function install()
+    {
+        return $this->belongsTo(Install::class, 'code', 'serial');
+    }
 }

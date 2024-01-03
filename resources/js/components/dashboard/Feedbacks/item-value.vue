@@ -1,6 +1,16 @@
 <template>
-    <div>
-      <h2 class="my-5 text-center">{{ $t("All Feedbacks") }}</h2>
+    <div class="container">
+        <div
+        v-if="!usedAsComponent"
+        class="page-header border"
+        style="margin-top: 10px"
+      >
+        <div class="col-md-6 col-sm-12">
+            <div class="head-title">
+              {{ $t("All Feedbacks") }}
+            </div>
+          </div>
+        </div>
       <div class="table-responsive">
         <table class="table" id="feedbackTable">
           <thead>
@@ -10,6 +20,7 @@
               <th scope="col">{{ $t("Point 3") }}</th>
               <th scope="col">{{ $t("Point 4") }}</th>
               <th scope="col">{{ $t("Comments") }}</th>
+              <th scope="col">{{ $t("name") }}</th>
             </tr>
           </thead>
           <tbody v-if="feedbackList.length">
@@ -19,11 +30,12 @@
               <td>{{ feedback.point3 }}</td>
               <td>{{ feedback.point4 }}</td>
               <td>{{ feedback.comments }}</td>
+              <td>{{ feedback.install ? feedback.install.name : 'No Name' }}</td>
             </tr>
           </tbody>
           <tbody v-else>
             <tr>
-              <td class="no-result" colspan="5">{{ $t("No feedback available") }}</td>
+              <td class="no-result" colspan="6">{{ $t("No feedback available") }}</td>
             </tr>
           </tbody>
         </table>

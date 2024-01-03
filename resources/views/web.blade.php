@@ -52,6 +52,11 @@
     <div id="app">
         <app></app>
     </div>
+    <!-- Add Bootstrap CSS link -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+<!-- Add Bootstrap JS scripts (jQuery and Popper.js are required) -->
+
     <script src="{{ mix('js/app.js') }}"></script>
     <!-- Vendor JS Files -->
     <script src="/vendors/scripts/core.js"></script>

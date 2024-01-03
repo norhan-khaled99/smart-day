@@ -44,8 +44,6 @@ class FeedbackController extends Controller
     public function getAllFeedback()
     {
         $feedbacks = Feedback::all();
-        // return response()->json($feedbacks);
-
         return response()->json(['feedbacks' => $feedbacks]);
     }
 }

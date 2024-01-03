@@ -72,10 +72,10 @@ Route::prefix("installs")->group(function () {
 
 });
 
-Route::prefix("products")->group(function () {
-    Route::get("",'ProductController@GetAllProducts');
-    Route::get("/{productId}/price",'ProductController@getPrice');
-});
+// Route::prefix("products")->group(function () {
+//     Route::get("",'ProductController@GetAllproducts');
+//     Route::get("/{productId}/price",'ProductController@getPrice');
+// });
 
 Route::prefix("business-contracts")->group(function () {
     Route::post("", "BusinessContractorController@store");

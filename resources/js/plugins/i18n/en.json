@@ -132,6 +132,7 @@
     "TYPE_PRODUCT_NAME": "Type your product name",
     "PRODUCT_NAME": "Product Name",
     "ADD_PRODUCT": "Add Product",
+    "ADD_Question":"Add Question",
     "UPDATE_PRODUCT": "Update Product",
     "ALL_PRODUCTS": "All Products",
     "ADD_NEW_TAG": "Add New Tag",
@@ -266,7 +267,7 @@
     "HUBS": "Hubs",
     "NOTIFICATION_WHATSUP":"Notification (whatsup)",
     "NOTIFICATION_EMAIL":"Notification (email)",
-    
+
     "NOTIFICATION":"Client Notification",
     "ADD_HUB":"Add Hub",
     "INVALID": "isn't valid",

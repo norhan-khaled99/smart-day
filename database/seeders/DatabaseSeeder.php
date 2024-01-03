@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
         $this->call(AreaSeed::class);
         $this->call(CitySeed::class);
         $this->call(HubSeed::class);
+        $this->call(QuestionTables::class);
         // $this->call(BaseCategory::class);
     }
 }

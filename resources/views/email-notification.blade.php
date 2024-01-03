@@ -18,7 +18,7 @@
 <div>
 اجمالي المبلغ {{$input['price']}}
 </div>
-<div> 
+<div>
 الكود الخاص بك {{$input['code']}}
 </div>
 <div>

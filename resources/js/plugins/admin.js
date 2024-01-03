@@ -14,8 +14,10 @@ import ProductTable from '../components/dashboard/product/item-table';
 import ProductForm from '../components/dashboard/product/item-form';
 import MediaManager from '../components/dashboard/media-manager/item-list';
 import AuthenticatedAdminGuard from "../shared/guards/authenticated-admin-guard";
-import AllCities from "../components/dashboard/All-cities/item-value.vue"
-import Feedbacks from "../components/dashboard/Feedbacks/item-value.vue"
+import AllCities from "../components/dashboard/All-cities/item-value.vue";
+import Feedbacks from "../components/dashboard/Feedbacks/item-value.vue";
+import QuestionForm from "../components/dashboard/Questions/item-form.vue";
+import QuestionTable from "../components/dashboard/Questions/item-table.vue"
 export default [{
     path: "/admin",
     component: DashboardLayout,
@@ -37,6 +39,9 @@ export default [{
         { path: "installs", component: Install, name: "admin-install" },
         { path: "Cities", component: AllCities, name: "all-Cities" },
         { path: "Feedbacks", component: Feedbacks, name: "Feedbacks" },
+        {path: "questions", component: QuestionTable, name: "questions"},
+        {path: "Add-questions", component: QuestionForm, name: "Add-questions"},
+
     ]
 },
 {

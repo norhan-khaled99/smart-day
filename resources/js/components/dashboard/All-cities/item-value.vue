@@ -1,11 +1,23 @@
 <template>
   <div class="container">
-    <h1 class="my-3 ">{{ $t('All Cities') }}</h1>
-    <div class="row d-flex">
+    <div
+    v-if="!usedAsComponent"
+    class="page-header border"
+    style="margin-top: 10px"
+  >
+    <div class="col-md-6 col-sm-12">
+        <div class="head-title">
+          {{ $t("All Cities") }}
+        </div>
+      </div>
+    </div>
+    <div class="row d-flex px-3">
       <ul >
         <li v-for="city in cities" :key="city.id" class="d-flex">
-          <div class="col-6">
+          <div class="col-8 ">
+            <div class="">
             {{ getCurrentCityName(city)}}
+          </div>
           </div>
           <div class="col-4">
           <label>
@@ -26,6 +38,7 @@
 import { ref, onMounted } from 'vue';
 import installClient from '../../../http-clients/web/install-client';
 import { useI18n } from 'vue-i18n';
+import { toast } from "vue3-toastify";
 
 export default {
   setup() {
@@ -36,6 +49,7 @@ export default {
       try {
         const response = await installClient.getCities();
         cities.value = response.data;
+
       } catch (error) {
         console.error('Error fetching cities:', error);
       }
@@ -43,12 +57,12 @@ export default {
 
     const updateCityStatus = async (cityId) => {
       try {
-        // Find the city in the array
         const cityToUpdate = cities.value.find((city) => city.id === cityId);
-
-        // Make an API call to update the status in the database
         await installClient.updateCityStatus(cityId, cityToUpdate.status);
-
+        toast.success(t("UPDATED_SUCCESSFULLY"), {
+            autoClose: 2000,
+            position: "top-center",
+          });
         console.log(`Status for city ${cityToUpdate.name} updated to ${cityToUpdate.status}`);
       } catch (error) {
         console.error(`Error updating status for city with ID ${cityId}:`, error);
@@ -71,10 +85,5 @@ export default {
 </script>
 
 <style>
-
-
-.test:checked {
-  background-color: #4eb529;
-}
 
 </style>
