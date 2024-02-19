@@ -19,30 +19,60 @@
 
                <div class="form-group my-3">
                    <label for="point1" class="form-label">
-                    {{ $t("Question")}}
+                    {{ $t("Question Arabic")}}
                     </label>
-                   <input type="text" v-model="form.question_ar" class="form-control" required>
+                   <input type="text" v-model="form.question_ar"
+                   :class="{
+                    'is-invalid': v$.question_ar.$error,
+                  }"
+                   class="form-control" >
+                   <div v-for="error in v$.question_ar.$errors" :key="error">
+                    {{ $t("Question Arabic") + " " + $t(error.$validator) }}
+                </div>
+
                </div>
 
                <div class="form-group my-3">
                 <label for="point1" class="form-label">
-                 {{ $t("Question")}}
+                 {{ $t("Question English")}}
                  </label>
-                <input type="text" v-model="form.question_en" class="form-control" required>
+                <input type="text" v-model="form.question_en"
+                :class="{
+                    'is-invalid': v$.question_en.$error,
+                  }"
+                class="form-control" >
+                <div v-for="error in v$.question_en.$errors" :key="error">
+                    {{ $t("Question English") + " " + $t(error.$validator) }}
+                </div>
             </div>
 
                <div class="form-group my-3">
                 <label for="point2" class="form-label">
-                 {{ $t("Answer")}}
+                 {{ $t("Answer Arabic")}}
                 </label>
-                <input type="text" v-model="form.answer_ar" class="form-control"  required>
+                <input type="text" v-model="form.answer_ar"
+                :class="{
+                    'is-invalid': v$.answer_ar.$error,
+                  }"
+                class="form-control"  >
+                <div v-for="error in v$.answer_ar.$errors" :key="error">
+                    {{ $t("Answer Arabic") + " " + $t(error.$validator) }}
+                </div>
                 </div>
 
                <div class="form-group my-3">
                    <label for="point2" class="form-label">
-                    {{ $t("Answer")}}
+                    {{ $t("Answer English")}}
                    </label>
-                   <input type="text" v-model="form.answer_en" class="form-control"  required>
+                   <input type="text" v-model="form.answer_en"
+                   :class="{
+                    'is-invalid': v$.answer_en.$error,
+                  }"
+                   class="form-control" >
+
+                   <div v-for="error in v$.answer_en.$errors" :key="error">
+                    {{ $t("Answer English") + " " + $t(error.$validator) }}
+                </div>
                </div>
 
 
@@ -60,11 +90,12 @@
 </template>
 
 <script>
-import { onMounted,ref } from "vue";
+import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 import questionsClient from "../../../http-clients/admin/questions-client.js";
 import { toast } from "vue3-toastify";
-
+import useVuelidate from "@vuelidate/core";
+import { required } from "@vuelidate/validators";
 export default {
 
 setup(){
@@ -76,16 +107,33 @@ setup(){
         answer_en:"",
     });
 
+    const rules={
+        question_ar:{required},
+        question_en:{required},
+        answer_ar:{required},
+        answer_en:{required},
+    };
+
+    const v$ = useVuelidate(rules, form);
 
     const submitForm = async () => {
+        if (v$.value.$invalid) {
+            v$.value.$touch();
+            return;
+        }
       try {
-        console.log(form.value);
         const response = await questionsClient.store(form.value);
-        console.log('Question submitted successfully:', response);
+        v$.value.$reset();
+        form.question_ar="",
+        form.question_en="",
+        form.answer_ar="",
+        form.answer_en="",
+
         toast.success(t("CREATED_SUCCESSFULLY"), {
             autoClose: 2000,
             position: "top-center",
           });
+          router.push("/")
         form.value = "";
 
       } catch (error) {
@@ -96,6 +144,8 @@ setup(){
     return{
         form,
         submitForm,
+        locale,
+        v$,
     };
 }
 
@@ -103,5 +153,7 @@ setup(){
 </script>
 
 <style>
-
+.is-invalid input {
+    border: 1px solid #dc3545 !important;
+  }
 </style>

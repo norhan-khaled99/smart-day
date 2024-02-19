@@ -33,7 +33,7 @@ class InstallRequest extends FormRequest
             "neighborhood" => "required",
             "street" => "required",
             "date" => "required",
-            "products_number" => "required",
+            // "products_number" => "required",
             "quantity" => "required",
             "order_number" => "required",
             "message" => "nullable",

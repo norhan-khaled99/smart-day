@@ -611,7 +611,6 @@ export default {
     };
 
     function getForm() {
-  console.log(form.value);
   return form;
 }
 

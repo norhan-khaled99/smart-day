@@ -27,7 +27,8 @@
                 <line x1="5" y1="12" x2="19" y2="12"></line>
               </svg>
               <span>
-                {{ $t("ADD_Question") }}
+                {{ locale === 'ar' ? $t("اضافة سؤال") : $t("Add Question") }}
+
               </span>
             </router-link>
         </div>
@@ -35,14 +36,14 @@
      </div>
 
      <div class="table-responsive">
-        <table class="table" id="feedbackTable">
+        <table class="table table-bordered" id="feedbackTable">
           <thead>
             <tr>
               <th scope="col">{{ $t("Question Arabic")}}</th>
               <th scope="col">{{ $t("Question English")}}</th>
               <th scope="col">{{ $t("Answer Arabic")}}</th>
               <th scope="col">{{ $t("Answer English") }}</th>
-              <th scope="col">{{ $t("Actions") }}</th>
+              <th scope="col">{{ $t("ACTIONS") }}</th>
             </tr>
           </thead>
           <tbody v-if="QuestionList.length">
@@ -52,7 +53,7 @@
               <td>{{ question.answer_ar }}</td>
               <td>{{ question.answer_en }}</td>
               <td> <button @click="deleteQuestion(question.id)" class="btn btn-danger">
-                {{ $t("Delete") }}
+                {{ locale === 'ar' ? $t("حذف") : $t("Delete") }}
             </button></td>
             </tr>
           </tbody>
@@ -82,7 +83,6 @@ export default {
       try {
         const response = await questionsClient.getAllQuestions();
         QuestionList.value = response.data.questions;
-        console.log(QuestionList.value)
       } catch (error) {
         console.error('Error fetching Questions:', error);
       }
@@ -107,6 +107,7 @@ export default {
     return {
         QuestionList,
         deleteQuestion,
+        locale,
     };
   },
 };

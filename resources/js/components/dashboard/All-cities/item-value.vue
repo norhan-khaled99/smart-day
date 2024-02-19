@@ -11,6 +11,10 @@
         </div>
       </div>
     </div>
+
+
+
+
     <div class="row d-flex px-3">
       <ul >
         <li v-for="city in cities" :key="city.id" class="d-flex">
@@ -24,7 +28,7 @@
             <input
               type="checkbox"
               @change="updateCityStatus(city.id)"
-              v-model="city.status" class="test"/>
+              v-model="city.status" />
           </label>
 
         </div>
@@ -63,7 +67,6 @@ export default {
             autoClose: 2000,
             position: "top-center",
           });
-        console.log(`Status for city ${cityToUpdate.name} updated to ${cityToUpdate.status}`);
       } catch (error) {
         console.error(`Error updating status for city with ID ${cityId}:`, error);
       }
@@ -84,6 +87,3 @@ export default {
 };
 </script>
 
-<style>
-
-</style>

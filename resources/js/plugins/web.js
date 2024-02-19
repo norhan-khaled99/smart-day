@@ -68,9 +68,5 @@ export default [
     {
         path:"/createfeedback",
         component:createfeedback,
-
     },
-    {
-
-    }
 ];

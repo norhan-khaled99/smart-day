@@ -22,7 +22,7 @@
 الكود الخاص بك {{$input['code']}}
 </div>
 <div>
-    [اضغط هنا للدخول إلى صفحة التقييم](http://127.0.0.1:8000/createfeedback?code={{ $input['code'] }})
+    <a href="{{ url('/createfeedback'}}">اضغط لاضافة تقييم</a>
 </div>
 </div>
 

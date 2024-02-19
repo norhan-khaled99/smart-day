@@ -14,9 +14,8 @@ export default {
         return axios.get(`${BASE_URL}/hubs`);
     },
     getAllProducts() {
-        return axios.get(`${BASE_URL}/`);
+        return axios.get(`${BASE_URL}`);
     },
-
     getProductDetails(productId){
         return axios.get(`${BASE_URL}/${productId}`);
     }

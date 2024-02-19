@@ -30,7 +30,9 @@ class ProductController extends Controller
         $validatedData = $request->validated();
 
         $product = $this->productRepository->store($validatedData);
-        return response()->json("Item created successfully with id : $product->id",$product);
+        // return response()->json("Item created successfully with id : $product->id",$product);
+        return response()->json("Item created successfully with id: ", 201);
+
     }
 
 

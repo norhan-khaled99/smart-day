@@ -11,18 +11,20 @@
             </div>
           </div>
         </div>
+
       <div class="table-responsive">
-        <table class="table" id="feedbackTable">
+        <table class="table table-bordered" id="feedbackTable">
           <thead>
             <tr>
-              <th scope="col">{{ $t("Point 1") }}</th>
-              <th scope="col">{{ $t("Point 2") }}</th>
-              <th scope="col">{{ $t("Point 3") }}</th>
-              <th scope="col">{{ $t("Point 4") }}</th>
-              <th scope="col">{{ $t("Comments") }}</th>
-              <th scope="col">{{ $t("name") }}</th>
+              <th scope="col">{{ $t("Punctuality") }}</th>
+              <th scope="col">{{ $t("installation programming and training") }}</th>
+              <th scope="col">{{ $t("Employee Style") }}</th>
+              <th scope="col">{{ $t("Work cleanliness") }}</th>
+              <th scope="col">{{ $t("Notes") }}</th>
+              <th scope="col">{{ $t("Client_name") }}</th>
             </tr>
           </thead>
+
           <tbody v-if="feedbackList.length">
             <tr v-for="(feedback, index) in feedbackList" :key="feedback.id">
               <td>{{ feedback.point1 }}</td>
@@ -30,7 +32,8 @@
               <td>{{ feedback.point3 }}</td>
               <td>{{ feedback.point4 }}</td>
               <td>{{ feedback.comments }}</td>
-              <td>{{ feedback.install ? feedback.install.name : 'No Name' }}</td>
+              <td>{{ feedback.install_name ? feedback.install_name : 'No Name' }}</td>
+
             </tr>
           </tbody>
           <tbody v-else>
@@ -58,7 +61,6 @@
         try {
           const response = await feedbackClient.getfeedbacks();
           feedbackList.value = response.data.feedbacks;
-          console.log(feedbackList.value)
         } catch (error) {
           console.error('Error fetching feedback:', error);
         }
@@ -74,5 +76,5 @@
   </script>
 
   <style scoped>
-  /* Add your component styles here */
+
   </style>

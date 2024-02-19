@@ -45,13 +45,13 @@
           <form @submit.prevent="sendEmail">
             <div class="modal-body">
               <h5 class="modal-title" id="exampleModalLabel">
-                {{ $t("NOTIFICATION") }}
+                {{ $t("INSTALLATION_SERVICE") }}
               </h5>
               <div class="form-group">
                 <input
                   v-model="price"
                   type="number"
-                  :placeholder="$t('ENTER_PRICE')"
+                  :placeholder="$t('INSTALLATION_SERVICE')"
                   class="form-control"
                 />
               </div>
@@ -355,13 +355,13 @@ export default {
           data.currentItem.phone +
           "&text=" +
           encodeURIComponent(`
-عزيزي العميل
-نشكر لكم ثقتكم بطلب الخدمة
-نرجو الاطلاع على الاسعار المرفقة
-ولطلب التوضيح والتفاصيل نرجو التواصل مع فريق المبيعات .
-نرجو ان تنال خدماتنا رضاكم،
-اجمالي السعر ${data.price}،
-الكود الخاص بكم ${data.currentItem.serial}
+            عزيزي العميل
+            نشكر لكم ثقتكم بطلب الخدمة
+            نرجو الاطلاع على الاسعار المرفقة
+            ولطلب التوضيح والتفاصيل نرجو التواصل مع فريق المبيعات .
+            نرجو ان تنال خدماتنا رضاكم،
+            اجمالي السعر ${data.price}،
+            الكود الخاص بكم ${data.currentItem.serial}
           `);
         window.open(url);
       }

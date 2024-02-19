@@ -24,13 +24,10 @@ class Install extends Model
     {
         return $this->belongsTo(Product::class);
     }
-    // public function feedback()
-    // {
-    //     return $this->belongsTo(Feedback::class);
-    // }
-    public function feedbacks()
+    public function feedback()
     {
-        return $this->hasMany(Feedback::class, 'code', 'serial');
+        return $this->belongsTo(Feedback::class,'serial');
     }
+
 
 }

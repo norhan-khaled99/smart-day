@@ -3,7 +3,7 @@
     <div
     class="breadcrumbs d-flex align-items-center"
     style="background-image: url('/web/assets/img/breadcrumbs-bg.jpg')"
-  >
+   >
     <div
       class="container position-relative d-flex flex-column align-items-center"
       data-aos="fade"
@@ -93,7 +93,6 @@ export default {
 
     const toggleAccordion = (index) => {
       activeIndex.value = activeIndex.value === index ? -1 : index;
-      console.log("value", activeIndex.value);
     };
 
     const changePage = (page) => {
@@ -118,14 +117,17 @@ export default {
 </script>
 
 <style>
-
-.accordion-button {
-    color:#5ae4aa;
-    border-color: #5ae4aa;
+.accordion-body{
+    color:black;
 }
-
+.accordion-button {
+    color:black;
+}
+.accordion-button:hover,:focus-visible{
+    color:#5ae4aa;
+}
 .pagination .page-link {
-    background-color:#5ae4aa;;
+    background-color:#5ae4aa;
     border-color: #5ae4aa;
     color: #FFFFFF;
   }

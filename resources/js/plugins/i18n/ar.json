@@ -392,9 +392,21 @@
     "Question":"السؤال",
     "Answer":"الاجابة",
     "submit":"اضغط للارسال",
-    "Add Product":"اضف سؤال",
+    "Add Product":"اضف منتج",
     "Question Arabic":"السؤال باللغة العربية",
     "Question English":"السؤال باللغة الانجليزية",
     "Answer Arabic":"الاجابة باللغة العربية",
-    "Answer English":"الاجابة باللغةالانجيليزية"
+    "Answer English":"الاجابة باللغةالانجيليزية",
+    "Dear Guest We will contact you as soon as possible":"ضيفنا العزيز سوف نقوم بالتواصل معكم في اقرب وقت ممكن",
+    "Product Price":"سعر المنتج",
+    "Punctuality":"الالتزام بالموعد",
+    "installation programming and training":"التركيب والبرمجة والتدريب",
+    "Employee Style":"اسلوب تعامل الفني",
+    "Work cleanliness":"نظافة العمل",
+    "Notes":"ملاحظات",
+    "Client_name":"اسم العميل",
+    "Add Question":"اضافة سؤال",
+    "No Questions available":"لا يوجد اسئلة لعرضها",
+    "serial":"رقم الطلبية",
+    "Product Taxes":"ضريبةالمنتج"
 }

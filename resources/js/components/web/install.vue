@@ -70,7 +70,6 @@
           <!-- End Google Maps -->
 
           <div class="col-lg-6">
-            <p>تركيب </p>
             <form @submit.prevent="store" role="form" class="php-email-form ">
               <div class="row gy-4">
                 <div class="col-lg-6 form-group">
@@ -154,7 +153,7 @@
                     :class="{
                       'is-invalid': v$.area_id.$error,
                     }"
-                    @change="onAreaChange"
+                    @select="onAreaChange()"
                   />
                   <div class="invalid-feedback">
                     <div v-for="error in v$.area_id.$errors" :key="error">
@@ -163,9 +162,6 @@
                   </div>
                 </div>
 
-                <div v-if="cityStatus==false" class="alert alert-danger" role="alert">
-                    A simple danger alert—check it out!
-                </div>
 
                 <div class="col-lg-6 form-group">
                   <Multiselect
@@ -181,18 +177,16 @@
                   @select="getcityStatus()"
                 />
 
-
-                {{ cityStatus }}
-                <div v-if="isCityStatusFalse">
-                    nn
-                </div>
-
                 <div class="invalid-feedback">
                     <div v-for="error in v$.city_id.$errors" :key="error">
                         {{ $t("CITY") + " " + $t(error.$validator) }}
                     </div>
                 </div>
                 </div>
+                <p v-if=" cityStatus == 'false' " class="text-weight-bold col-12 my-0 font-italic text-center">
+                  {{ locale === 'ar' ? $t("Dear Guest We will contact you as soon as possible") : $t("Dear Guest We will contact you as soon as possible", { locale: 'en' }) }}
+
+                </p>
 
                 <div class="col-lg-6 form-group">
                     <Multiselect
@@ -205,7 +199,7 @@
                     v-model="v$.product_id.$model"
                     valueProp="id"
                     :options="products"
-                    @click="getproductdetailsbyId()"
+                    @keyup="getproductdetailsbyId(product_id)"
                   />
                 </div>
 
@@ -227,9 +221,9 @@
                     </div>
                   </div>
 
-
-                <div class="row d-flex justify-content-between">
-                    {{ getTotalPrice()}} {{ getTaxes() }}
+                <div v-if="cityStatus == 'true'" class="text-weight-bold col-12 my-0 fs-6 text-start font-italic">
+                   <span class="mx-2">  {{ $t("PRODUCT_PRICE") }}   {{ getTotalPrice()}} </span>
+                   <span class="ms-3">  {{ $t("PRODUCT_TAXES") }}    {{ getTaxes() }} </span>
                 </div>
 
                 <div class="col-lg-6 form-group">
@@ -304,6 +298,7 @@
                 <button type="submit">{{ $t("COMPLETE_ORDER") }}</button>
               </div>
             </form>
+
           </div>
           <!-- End Contact Form -->
         </div>
@@ -319,7 +314,7 @@ import productApiClient from "../../http-clients/web/product-client";
 import { required, email } from "@vuelidate/validators";
 import installClient from "../../http-clients/web/install-client";
 import { toast } from "vue3-toastify";
-import { onMounted, reactive, toRefs , ref, watch,computed} from "vue";
+import { onMounted, reactive, toRefs , ref, watch} from "vue";
 import { useI18n } from "vue-i18n";
 import useVuelidate from "@vuelidate/core";
 
@@ -335,14 +330,14 @@ export default {
     const filteredCity=ref({});
     let productId=ref(null);
 
-    const cityId = ref(null);
     const cityStatus = ref(null);
 
     const form = reactive({
+
       name: "",
       phone: "",
       email: "",
-      products_number: "",
+    //   products_number: "",
       quantity: "",
       order_number: "",
       product_id:"",
@@ -352,6 +347,7 @@ export default {
       neighborhood: "",
       street: "",
       message: "",
+
     });
 
 
@@ -365,34 +361,42 @@ export default {
     ],
     citiesByArea: {
         1: [
-        { id: 1, name: "ابها", name_e: "Abha", },
-        { id: 2, name: "بقيق" , name_e: "Central" },
-        { id: 3, name: "الباحة", name_e: "Central"  },
-        { id: 4, name: "الدمام", name_e: "Central"  },
+        {  id: 7, name: "الخرج", name_e: "Al-Kharj" },
+        {  id: 12, name: "بريدة", name_e: "Buraydah"},
+        { id: 4, name: "الدمام", name_e: "Al-Dammam"},
+        {id:23,name: "الرياض",name_e:"Riyadh"}
         ],
         2: [
-        { id: 5, name: "الهفهوف" },
-        { id: 6, name: "الجوف" },
-        { id: 7, name: "الخرج" },
-        { id: 8, name: "الخبر" },
+        { id: 10, name: "الطائف" , name_e:"Al-Taif" },
+        { id: 15, name: "جدة", name_e:"Jiddah" },
+        { id: 19, name: "مكة المكرمة",name_e:"Mecca"},
+        { id: 20, name: "المدينة المنورة", name_e: "Medina"},
+        {id:24,name:"سكاكا",name_e: "Sakaka"},
+        {id:26,name:"ينبع",name_e:"Yanbu"},
+
         ],
         3: [
-        { id: 9, name: "الهفهوف" },
-        { id: 10, name: "الجوف" },
-        { id: 11, name: "الخرج" },
-        { id: 12, name: "الخبر" },
+        { id: 1, name: "ابها", name_e: "Abha" },
+        { id: 16, name: "جازان",name_e:"Jizan"},
+        { id: 17, name: "خميس مشيط",name_e:"Khamis Mushayt" },
+        { id: 21, name: "نجران",name_e:"Najran"},
         ],
         4: [
-        { id: 13, name: "ابها" },
-        { id: 14, name: "بقيق" },
-        { id: 15, name: "الباحة" },
-        { id: 16, name: "الدمام" },
+        {  id: 6, name: "الجوف", name_e: "Al-Jawf" },
+        {  id: 11, name: "عرعر", name_e: "Arar" },
+        {  id: 14, name: "يشيد", name_e: "Hail" },
+        { id: 25, name: "تبوك" ,name_e:"Tabuk"},
         ],
         5: [
-        { id: 17, name: "الهفهوف" },
-        { id: 18, name: "الجوف" },
-        { id: 19, name: "الخرج" },
-        { id: 20, name: "الخبر" },
+        { id: 2, name: "بقيق" , name_e: "Abqaiq" },
+        { id: 3, name: "الباحة", name_e: "Al-Bahah"},
+        { id: 4, name: "الدمام", name_e: "Al-Dammam" },
+        { id: 5, name: "الهفهوف" , name_e:"Al-Hufuf" },
+        { id: 8, name: "الخبر" , name_e:"Al-Khubar" },
+        { id: 9, name: "القطيف" , name_e:"Al-Qatif" },
+        { id: 13, name: "الظهران", name_e: "Dhahran"},
+        { id: 18, name: "مدينة الملك خالد العسكرية", name_e: "King Khalid Military City"},
+        {id:22,name:"رأس تنورة", name_e:"Ras Tanura"},
         ],
     },
     filteredCities: [],
@@ -404,7 +408,6 @@ export default {
         try {
             const response = await productApiClient.getAllProducts();
             products.value = response.data.data;
-
         } catch (error) {
             console.error('Error fetching all products:', error);
         }
@@ -416,11 +419,11 @@ export default {
         const quantity = parseFloat(form.quantity);
         const price = parseFloat(getproductdetails.value.price);
         const totalPrice = quantity * price;
-        console.log(totalPrice);
         return (totalPrice.toFixed(2));
       }
       return '';
     };
+
     const getTaxes = () => {
         const Taxes= getproductdetails.value.taxes;
         return Taxes;
@@ -428,11 +431,10 @@ export default {
 
     const getproductdetailsbyId = async () => {
         productId=form.product_id;
+
         try {
-            console.log("id",form.product_id,productId);
             const response = await productApiClient.getProductDetails(productId);
             getproductdetails.value = response.data;
-            console.log(getproductdetails.value);
 
         } catch (error) {
             console.error('Error fetching all products:', error);
@@ -443,14 +445,13 @@ export default {
     onMounted(() => {
     fetchAllProducts();
     getCities();
-    getcityStatus();
     });
 
     const rules = {
       name: { required },
       phone: { required },
       email: { required, email },
-      products_number: { required },
+    //   products_number: { required },
       quantity: { required },
       date: { required },
       order_number: { required },
@@ -461,34 +462,30 @@ export default {
       street: { required },
     };
 
+
+
     const getcityStatus = () => {
+    data.filteredCities.forEach((filteredCity) => {
 
-      data.filteredCities.forEach((filteredCity) => {
         if (filteredCity.id == form.city_id) {
-          cityStatus.value = filteredCity.status;
-          console.log(cityStatus.value);
+        cityStatus.value = filteredCity.status;
         }
-
-      });
+    });
     };
 
+
     watch(cityStatus, (newCityStatus, oldCityStatus) => {
-      console.log("City Status changed:", newCityStatus);
+      console.log(newCityStatus);
     });
-    const isCityStatusFalse = computed(() => cityStatus.value === false);
-
-
 
 
     function filterCitiesByArea(areaId) {
-     data.filteredCities = data.citiesByArea[1] || [];
-     console.log("Filtered cities:", data.filteredCities);
+     data.filteredCities = data.citiesByArea[areaId]||[];
 
      data.cities.forEach((city) => {
      data.filteredCities.forEach((filteredCity) => {
       if(filteredCity.name==city.name){
         filteredCity.status=city.status;
-
       }
     });
     });
@@ -522,7 +519,7 @@ export default {
         email: form.email,
         order_number: form.order_number,
         product_id:form.product_id,
-        products_number: form.products_number,
+        // products_number: form.products_number,
         quantity: form.quantity,
         date: form.date,
         area_id: form.area_id,
@@ -541,11 +538,12 @@ export default {
         .store(getForm())
         .then(() => {
           v$.value.$reset();
+
           form.name = "";
           form.phone = "";
           form.email = "";
           form.date = datetimeLocal();
-          form.products_number = "";
+        //   form.products_number = "";
           form.quantity = "";
           form.product_id="";
           form.area_id = "";
@@ -558,7 +556,9 @@ export default {
             position: "top-center",
           });
         })
-        .catch((error) => {});
+        .catch((error) => {
+          console.log(error);
+        });
     }
     return {
       onAreaChange,
@@ -569,12 +569,11 @@ export default {
       getTotalPrice,
       getproductdetailsbyId,
       products,
+      locale,
       cityStatus,
-      cityId,
       filteredCity,
       filteredCities,
       getcityStatus,
-      isCityStatusFalse,
       getTaxes,
       ...toRefs(form),
       ...toRefs(data),

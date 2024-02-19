@@ -378,5 +378,12 @@
     "NATIONALITY":"Nationality",
     "AREA":"Area",
     "Certificate":"Certificates",
-    "EXPERIENCE":"Experience"
+    "EXPERIENCE":"Experience",
+    "PRODUCT_PRICE":"Product Price",
+    "QUESTIONS":"questions",
+    "NO_QUESTIONS_AVAILABLE":"No Questions available",
+
+    "PUNCTUALITY":"Punctuality",
+    "INSTALLATION_PROGRAMMIND_AND_TRAINIG":"installation programming and training",
+    "SERIAL":"serial"
 }
